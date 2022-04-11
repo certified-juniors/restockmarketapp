@@ -1,0 +1,24 @@
+<div class="nav-wrapper">
+  <a class="navbar-brand" href="/">
+    <img
+      src="geld.svg"
+      alt=""
+      width="30"
+      height="24"
+      class="d-inline-block align-text-top"
+    />
+    Биржа
+  </a>
+  <div class="navbar-nav me-auto" style="margin-inline-start: auto;">
+    <a class="nav-link" href="#">Акции</a>
+    <a class="nav-link" href="#">Новости</a>
+    <div class="rightCorner">
+        {{#if isAuthorised}}
+        <a class="nav-link" href="/lk">Личный кабинет</a>
+        {{else}}
+        <a class="nav-link" href="/login">Войти</a>
+        <a class="nav-link" href="/reg">Регистрация</a>
+        {{/if}}
+    </div>
+  </div>
+</div>

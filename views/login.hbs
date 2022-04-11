@@ -1,0 +1,16 @@
+<h2>Вход</h2>
+{{#if isAuthorised}}
+    <p>Вы вошли как {{user.login}}</p>
+    <p>Ваш пароль: {{user.password}}</p>
+{{else}}
+    {{#if error}}
+        <p>{{error}}</p>
+    {{/if}}
+    <form action="/login" method="POST">
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email" />
+        <label for="password">Пароль:</label>
+        <input type="password" name="password" id="password">
+        <input type="submit" value="Войти">
+    </form>
+{{/if}}

@@ -1,0 +1,5 @@
+<h2>Личный кабинет</h2>
+{{#if isAuthorised}}
+    <p>Вы вошли как {{user.email}}</p>
+    <p>Ваш пароль: {{user.password}}</p>
+{{/if}}
