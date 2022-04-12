@@ -4,13 +4,13 @@ const Stock = require('../models/Stock');
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
+const { secret } = require('../config');
 
 const generateAccessToken = (id, userstocks) => {
     const payload = {
         id,
-        userstocks,
     }
-    return jwt.sign(payload, "<RANDOM_KEY>", { expiresIn: '2h' });
+    return jwt.sign(payload, secret, { expiresIn: '2h' });
 }
 
 class UserController {
@@ -32,11 +32,9 @@ class UserController {
                 });
             }
             const token = generateAccessToken(user._id, user.userstocks);
-            res.cookie.clear();
-            res.cookie('jwt', token, {
-                maxAge: 3600000 * 2,
-                httpOnly: true,
-            });
+            console.log("AAA", token);
+            req.user = user;
+            res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60 * 2}`);
             return res.redirect('/lk');
         } catch (error) {
             console.log(error);

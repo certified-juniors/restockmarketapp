@@ -1,1 +1,7 @@
 <h2>index page</h2>
+{{#if user}}
+    <p>Вы вошли как {{user.email}}</p>
+    <p>Ваш пароль: {{user.password}}</p>
+{{else}}
+    <p>Вы не вошли</p>
+{{/if}}
