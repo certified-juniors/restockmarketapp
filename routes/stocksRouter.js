@@ -49,7 +49,7 @@ router.get('/reg', async (req, res) => {
 });
 
 router.post('/registration', [
-    check('login', 'Login is required').notEmpty(),
+    check('username', 'Username is required').notEmpty(),
     check('password', 'Пароль должен содержать не меньше 6 символов').isLength({ min: 6 }),
     check('email', 'E-mail is required').isEmail(),
 ], userController.registration);
