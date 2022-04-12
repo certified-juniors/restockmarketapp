@@ -1,33 +1,20 @@
 const { Router } = require('express');
 const router = Router();
-const controller = require('../controllers/userController');
+const { controller: userController, getUser } = require('../controllers/userController');
+const stockController = require('../controllers/stockController');
 const { check, cookie } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const { secret } = require('../config');
-const e = require('express');
 const User = require('../models/User');
-
-async function getUser(req) {
-    if (req.headers.cookie && req.headers.cookie.split("=")[0] === 'token') {
-        try {
-            const token = req.headers.cookie.split('=')[1];
-            const decodedData = jwt.verify(token, secret);
-            let user = await User.findById(decodedData.id).lean();
-            delete user.password;
-            return user;
-        } catch (e) {
-            console.log(e);
-            return undefined;
-        }
-    }
-    return undefined
-}
 
 router.get('/', async (req, res) => {
     const user = await getUser(req);
+    const page = req.query.page || 0
+    stocks = stockController.indexPage(page);
     res.render('index', {
         user,
         title: 'Stocks',
+        page,
     });
 });
 
@@ -65,12 +52,13 @@ router.post('/registration', [
     check('login', 'Login is required').notEmpty(),
     check('password', 'Пароль должен содержать не меньше 6 символов').isLength({ min: 6 }),
     check('email', 'E-mail is required').isEmail(),
-], controller.registration);
-router.post('/login', controller.login);
-router.get('/users', controller.getUsers);
+], userController.registration);
+router.post('/login', userController.login);
+router.get('/users', userController.getUsers);
 router.get('/logout', (req, res) => {
     res.setHeader('Set-Cookie', `token=; HttpOnly; Max-Age=0`);
     res.redirect('/');
 });
+router.post('/topup', userController.topup);
 
 module.exports = router;

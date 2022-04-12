@@ -13,6 +13,23 @@ const generateAccessToken = (id, userstocks) => {
     return jwt.sign(payload, secret, { expiresIn: '2h' });
 }
 
+async function getUser(req) {
+    if (req.headers.cookie && req.headers.cookie.split("=")[0] === 'token') {
+        try {
+            const token = req.headers.cookie.split('=')[1];
+            const decodedData = jwt.verify(token, secret);
+            let user = await User.findById(decodedData.id).lean();
+            delete user.password;
+            console.log(user);
+            return user;
+        } catch (e) {
+            console.log(e);
+            return undefined;
+        }
+    }
+    return undefined
+}
+
 class UserController {
     async login(req, res) {
         try {
@@ -32,7 +49,6 @@ class UserController {
                 });
             }
             const token = generateAccessToken(user._id, user.userstocks);
-            console.log("AAA", token);
             req.user = user;
             res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60 * 2}`);
             return res.redirect('/lk');
@@ -70,6 +86,22 @@ class UserController {
             });
         }
     }
+
+    async topup(req, res) {
+        try {
+            const {amount} = req.body;
+            const token = req.headers.cookie.split('=')[1];
+            const decodedData = jwt.verify(token, secret);
+            let user = await User.findById(decodedData.id);
+            user.balance += +amount;
+            await user.save();
+            res.redirect('/lk');
+        } catch (error) {
+            console.log(error);
+            res.redirect('/lk');
+        }
+    }
+
     async getUsers(req, res) {
         try {
             const users = await User.find();
@@ -80,4 +112,8 @@ class UserController {
     }
 }
 
-module.exports = new UserController();
+
+module.exports = {
+    "controller": new UserController(),
+    "getUser": getUser,
+}

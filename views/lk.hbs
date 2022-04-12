@@ -1,6 +1,37 @@
 <h2>Мой портфель</h2>
 <!-- ДА ПОРТФЕЛЬ, ОБ ЛК ПОТОМ ПОДУМАЕМ -->
 {{#if user}}
-    <p>Вы вошли как {{user.email}}</p>
-    <p>Ваш пароль: {{user.password}}</p>
+    <p>Вы вошли как {{user.username}}</p>
+    <p>Ваш баланс: {{user.balance}}</p>
+    <form action="/topup" method="post">
+        <label for="amount">Сумма пополнения:</label>
+        <input type="number" step="0.01" name="amount" id="amount" required>
+        <input type="submit" name="submit" value="Пополнить">
+    </form>
+    {{#if user.userstocks}}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Название</th>
+                    <th scope="col">Количество</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Сумма</th>
+                    <th scope="col">Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each user.userstocks}}
+                    <tr>
+                        <td>{{this.name}}</td>
+                        <td>{{this.amount}}</td>
+                        <td>{{this.cur_price}}</td>
+                        <td>{{* this.amount this.cur_price}}</td>
+                        <td><a href="/sell/{{this.id}}">Продать</a></td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <p>У вас нет акций</p>
+    {{/if}}
 {{/if}}
