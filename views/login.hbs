@@ -4,7 +4,9 @@
     <p>Ваш пароль: {{user.password}}</p>
 {{else}}
     {{#if error}}
-        <p>{{error}}</p>
+        <p>
+            <h5 class = "vstack gap-2 col-md-5 mx-auto text-danger" style = "margin-top: 20px">{{error}}</h5>
+        </p>
     {{/if}}
 
     <form action = "/login" method = "POST">
