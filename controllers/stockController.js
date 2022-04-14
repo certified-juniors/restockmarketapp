@@ -2,7 +2,6 @@ const finnhub = require('finnhub');
 const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 api_key.apiKey = require('../config').apikey;
 const finnhubClient = new finnhub.DefaultApi();
-const fs = require('fs');
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -97,8 +96,8 @@ class StockController {
             this.timestampFirstRequest = now;
             this.counter = 0;
         }
-        return true;
-
+        this.timestamp = new Date().getTime() - 10000;
+        this.rate = this.getRate();
     }
 
     updateData() {
@@ -117,21 +116,21 @@ class StockController {
                     last_price: 321.5,
                     graph: [
                         {
-                            timestamp: new Date().getTime() - 3 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 3*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 2 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 2*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 1 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 1*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
@@ -145,21 +144,21 @@ class StockController {
                     last_price: 321.5,
                     graph: [
                         {
-                            timestamp: new Date().getTime() - 3 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 3*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 2 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 2*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 1 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 1*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
@@ -173,21 +172,21 @@ class StockController {
                     last_price: 321.5,
                     graph: [
                         {
-                            timestamp: new Date().getTime() - 3 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 3*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 2 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 2*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 1 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 1*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
@@ -199,7 +198,22 @@ class StockController {
         }
     }
 
+    async getRate() {
+    }
+
+    async updateRate() {
+        this.rate = await getRate();
+    }
+
     async indexPage(req, res) {
+    }
+
+    async getStock(req, res) {
+        if (!this.canUpdate()) {
+            return undefined;
+        }
+        this.timestamp = new Date().getTime();
+        console.log(stock);
     }
 
     async downloadCSV() {
