@@ -28,7 +28,7 @@ app.set('views', './views');
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(express.json())
 app.use(stockRoutes);
-//app.use(express.static('views/images'));
+app.use(express.static('views/images'));
 
 const PORT = process.env.PORT || 3000;
 
