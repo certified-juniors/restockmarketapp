@@ -42,28 +42,90 @@ class StockController {
     getData() {
         return {
             date: "2020-04-17 20:30:00",
-            last_price: 321.5,
-            graph: [
+            stocks: [
                 {
-                    timestamp: new Date().getTime() - 3*this.INTERVAL,
-                    open: 170.35,
-                    high: 170.40,
-                    low: 170.35,
-                    close: 170.40,
+                    symbol: "YNDX",
+                    name: "Yandex",
+                    last_price: 321.5,
+                    graph: [
+                        {
+                            timestamp: new Date().getTime() - 3*this.INTERVAL,
+                            open: 170.35,
+                            high: 170.40,
+                            low: 170.35,
+                            close: 170.40,
+                        },
+                        {
+                            timestamp: new Date().getTime() - 2*this.INTERVAL,
+                            open: 170.35,
+                            high: 170.40,
+                            low: 170.35,
+                            close: 170.40,
+                        },
+                        {
+                            timestamp: new Date().getTime() - 1*this.INTERVAL,
+                            open: 170.35,
+                            high: 170.40,
+                            low: 170.35,
+                            close: 170.40,
+                        },
+                    ]
                 },
                 {
-                    timestamp: new Date().getTime() - 2*this.INTERVAL,
-                    open: 170.35,
-                    high: 170.40,
-                    low: 170.35,
-                    close: 170.40,
+                    symbol: "AAPL",
+                    name: "Apple",
+                    last_price: 321.5,
+                    graph: [
+                        {
+                            timestamp: new Date().getTime() - 3*this.INTERVAL,
+                            open: 170.35,
+                            high: 170.40,
+                            low: 170.35,
+                            close: 170.40,
+                        },
+                        {
+                            timestamp: new Date().getTime() - 2*this.INTERVAL,
+                            open: 170.35,
+                            high: 170.40,
+                            low: 170.35,
+                            close: 170.40,
+                        },
+                        {
+                            timestamp: new Date().getTime() - 1*this.INTERVAL,
+                            open: 170.35,
+                            high: 170.40,
+                            low: 170.35,
+                            close: 170.40,
+                        },
+                    ]
                 },
                 {
-                    timestamp: new Date().getTime() - 1*this.INTERVAL,
-                    open: 170.35,
-                    high: 170.40,
-                    low: 170.35,
-                    close: 170.40,
+                    symbol: "NVDA",
+                    name: "Nvidia",
+                    last_price: 321.5,
+                    graph: [
+                        {
+                            timestamp: new Date().getTime() - 3*this.INTERVAL,
+                            open: 170.35,
+                            high: 170.40,
+                            low: 170.35,
+                            close: 170.40,
+                        },
+                        {
+                            timestamp: new Date().getTime() - 2*this.INTERVAL,
+                            open: 170.35,
+                            high: 170.40,
+                            low: 170.35,
+                            close: 170.40,
+                        },
+                        {
+                            timestamp: new Date().getTime() - 1*this.INTERVAL,
+                            open: 170.35,
+                            high: 170.40,
+                            low: 170.35,
+                            close: 170.40,
+                        },
+                    ]
                 },
             ]
         }
@@ -88,9 +150,6 @@ class StockController {
     }
 
     async downloadCSV() {
-        request.get("https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=demo")
-            .pipe(new StringStream())
-            .CSVParse()
     }
 }
 
