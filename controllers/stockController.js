@@ -2,49 +2,40 @@ const finnhub = require('finnhub');
 const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 api_key.apiKey = require('../config').apikey;
 const finnhubClient = new finnhub.DefaultApi();
-const fs = require('fs');
 
 class StockController {
     dev = true;
     INTERVAL = 5 * 60 * 1000; //ms
-
+    FOLLOWED_STOCKS = [
+        'YNDX',
+        'AAPL',
+        'AMZN',
+        'GOOGL',
+        'FB',
+        'NFLX',
+        'TSLA',
+        'MSFT',
+        'INTC',
+        'CSCO',
+        'AMD',
+        'NVDA',
+    ];
     constructor() {
-        this.counter = 1;
-        this.minuteOfLastUpdate = new Date().getMinutes() + new Date().getHours() * 60;
-        this.activeStocks = this.getActiveStocksFromFinnhub();
-    }
-
-    getActiveStocksFromFinnhub() {
-        let activeStocks = [];
-        finnhubClient.stockSymbols('ME',null, (error, data, response) => {
-            if (error) {
-                console.error(error);
+        if (this.dev) {
+            // todo load form disk
+            // if error continue with nodev else return
+            try {
+                console.log(this.getData());
                 return;
+            } catch (error) {
+                console.log(error);
             }
-            for (let i = 0; i < data.length; i++) {
-                activeStocks.push(data[i].symbol);
-            }
-        });
-    }
-
-    canUpdate() {
-        return this.counter < 60 && this.updateMinute();
-    }
-    
-    updateMinute() {
-        const now = new Date().getMinutes() + new Date().getHours() * 60;
-        if (now != this.minuteOfLastUpdate) {
-            this.minuteOfLastUpdate = now;
-            this.counter = 0;
         }
-        return true;
-
+        this.timestamp = new Date().getTime() - 10000;
+        this.rate = this.getRate();
     }
-
-    updateData() {
-        // Проверить есть ли список всех акций
-        // Если нет, то загрузить из финансового портала
-        console.log(stock);
+    canUpdate() {
+        return new Date().getTime() - this.timestamp > this.INTERVAL;
     }
 
     // На страницах обновляется Дата и время последнего обновления данных, Последняя цена акции, Необходимые данные для графиков.
@@ -58,21 +49,21 @@ class StockController {
                     last_price: 321.5,
                     graph: [
                         {
-                            timestamp: new Date().getTime() - 3 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 3*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 2 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 2*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 1 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 1*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
@@ -86,21 +77,21 @@ class StockController {
                     last_price: 321.5,
                     graph: [
                         {
-                            timestamp: new Date().getTime() - 3 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 3*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 2 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 2*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 1 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 1*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
@@ -114,21 +105,21 @@ class StockController {
                     last_price: 321.5,
                     graph: [
                         {
-                            timestamp: new Date().getTime() - 3 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 3*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 2 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 2*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
                             close: 170.40,
                         },
                         {
-                            timestamp: new Date().getTime() - 1 * this.INTERVAL,
+                            timestamp: new Date().getTime() - 1*this.INTERVAL,
                             open: 170.35,
                             high: 170.40,
                             low: 170.35,
@@ -140,7 +131,22 @@ class StockController {
         }
     }
 
+    async getRate() {
+    }
+
+    async updateRate() {
+        this.rate = await getRate();
+    }
+
     async indexPage(req, res) {
+    }
+
+    async getStock(req, res) {
+        if (!this.canUpdate()) {
+            return undefined;
+        }
+        this.timestamp = new Date().getTime();
+        console.log(stock);
     }
 
     async downloadCSV() {

@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
         page,
         mainstock: stockController.getData().stocks[0],
         stocks: stockController.getData().stocks,
+        get_data: true,
     });
 });
 
@@ -35,6 +36,7 @@ router.get('/lk', async (req, res) => {
         res.render('lk', {
             user,
             title: "Мой портфель",
+            get_data: true,
         });
     } else {
         res.redirect('/login');
@@ -63,5 +65,6 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
 });
 router.post('/topup', userController.topup);
+router.post('/getdata', (req, res) => res.json(stockController.getData()))
 
 module.exports = router;
