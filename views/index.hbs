@@ -1,28 +1,4 @@
-<h2>index page</h2>
-<!--<div class = "container">-->
-<!--    <div class = "row">-->
-<!--        <div class = col-8>-->
-<!--<div class="main_stock">-->
-<!--    <p id="name_of_main_stock">{{mainstock.symbol}}</p>-->
-<!--    <p id="price_of_main_stock">{{mainstock.last_price}}</p>-->
-<!--    <div id="graph_of_main_stock">-->
-<!--        <canvas id="myChart" width="400" height="400"></canvas>-->
-<!--</div>-->
-<!--</div>-->
-<!--    {{#each stocks}}-->
-<!--    <div class="col-4">-->
-<!--        <div class="card">-->
-<!--            <div class="card-header">-->
-<!--                <h3>{{this.symbol}}</h3>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title">{{this.last_price}}</h5>-->
-<!--                <p class="card-text">{{this.name}}</p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--{{/each}}-->
-<!--</div>-->
+<h2 style = "margin-top: 20px">Биржа</h2>
 
 <div class = "container">
     <div class = "row">
@@ -36,17 +12,17 @@
             </div>
         </div>
         <div class = "col-4">
-            {{#each stocks}}
-            <div class = "card">
-                <div class = "card-header">
-                    <h3>{{this.symbol}}</h3>
+                {{#each stocks}}
+                <div class = "card">
+                    <div class = "card-header">
+                        <h5>{{this.symbol}}</h5>
+                    </div>
+                    <div class = "card-body">
+                        <p class = "card-text">{{this.name}}</p>
+                        <h5 class = "card-title">{{this.last_price}}</h5>
+                    </div>
                 </div>
-                <div class = "card-body">
-                    <h5 class = "card-title">{{this.last_price}}</h5>
-                    <p class = "card-text">{{this.name}}</p>
-                </div>
-            </div>
-            {{/each}}
+                {{/each}}
         </div>
     </div>
 </div>
