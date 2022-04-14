@@ -4,6 +4,7 @@ const exphbs = require('express-handlebars');
 const stockRoutes = require('./routes/stocksRouter');
 const bodyparser = require('body-parser');
 const stockController = require('./controllers/stockController');
+const { db } = require('./config');
 
 const app = express();
 const hbs = exphbs.create({
@@ -34,7 +35,7 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
     try {
-        await mongoose.connect('mongodb+srv://PowerOne:OnePower@cluster0.pyxoe.mongodb.net/stocks', {
+        await mongoose.connect(db, {
             useNewUrlParser: true,
         });
     } catch (e) {
