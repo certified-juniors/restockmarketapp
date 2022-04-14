@@ -93,6 +93,13 @@ class UserController {
             const token = req.headers.cookie.split('=')[1];
             const decodedData = jwt.verify(token, secret);
             let user = await User.findById(decodedData.id);
+            if (+amount < 0) {
+                return res.render('lk', {
+                    title: 'Личный кабинет',
+                    error: "Неверное значение пополнения",
+                    user: user.lean(),
+                });
+            }
             user.balance += +amount;
             await user.save();
             res.redirect('/lk');
