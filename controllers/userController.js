@@ -96,7 +96,7 @@ class UserController {
     async topup(req, res) {
         try {
             const { amount } = req.body;
-            const token = req.headers.cookie.split('=')[1];
+            const token = getTokenFromCookie(req);
             const decodedData = jwt.verify(token, secret);
             let user = await User.findById(decodedData.id);
             if (+amount < 0) {
