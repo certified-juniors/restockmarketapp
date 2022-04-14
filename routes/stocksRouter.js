@@ -55,6 +55,7 @@ router.post('/registration', [
     check('password', 'Пароль должен содержать не меньше 6 символов').isLength({ min: 6 }),
     check('email', 'E-mail is required').isEmail(),
 ], userController.registration);
+
 router.post('/login', userController.login);
 router.get('/users', userController.getUsers);
 router.get('/logout', (req, res) => {

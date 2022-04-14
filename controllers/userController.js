@@ -44,14 +44,14 @@ class UserController {
             if (!user) {
                 return res.render('login', {
                     title: 'Вход',
-                    error: "Invalid email"
+                    error: "Неверно введена почта"
                 });
             }
             const validPassword = bcrypt.compareSync(password, user.password);
             if (!validPassword) {
                 return res.render('login', {
                     title: 'Вход',
-                    error: "Invalid password"
+                    error: "Неверно введен пароль"
                 });
             }
             const token = generateAccessToken(user._id, user.userstocks);
