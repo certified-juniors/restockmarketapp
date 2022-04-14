@@ -1,6 +1,5 @@
 const UserStock = require('../models/UserStock');
 const User = require('../models/User');
-const Stock = require('../models/Stock');
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
@@ -51,6 +50,7 @@ class UserController {
             const token = generateAccessToken(user._id, user.userstocks);
             req.user = user;
             res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Max-Age=${60 * 60 * 2}`);
+
             return res.redirect('/lk');
         } catch (error) {
             console.log(error);
