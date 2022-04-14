@@ -38,8 +38,17 @@
 <!--                            <th scope="col">Действие</th>-->
                         </tr>
                         </thead>
+ <!--                        Пример -->
+                        <tr data-bs-toggle="modal" data-bs-target="#Modal" data-bs-whatever="Google">
+                            <td class="company">Google</td>
+                            <td class="number">7</td>
+                            <td class="cur_price">1000</td>
+                            <td class="amount">7000</td>
+                        </tr>
+<!--                        Конец примера-->
                     </table>
-                    <p>У вас нет акций</p>
+                    <p>У вас нет акций, но вы можете купить их на
+                        <a style="text-decoration: none;" href="/"><mark>бирже</mark></a></p>
                 {{/if}}
             </div>
             <div class = "col-md-5">
@@ -56,4 +65,53 @@
             </div>
         </div>
     </div>
+
+    <!-- Модальное окно -->
+    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Баланс: {{user.balance}}</p>
+                    <p id="stock_company"></p>
+                    <input placeholder = "Стоимость" type="number" class="form-control mb-2" name = "price" id = "price" step = "0.01" required>
+                    <input placeholder = "Акция" type="number" class="form-control" name = "stock" id = "stock" step = "0.01" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Купить акции</button>
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Продать акции</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let Modal = document.getElementById('Modal')
+        Modal.addEventListener('show.bs.modal', (event) => {
+            let tr = event.relatedTarget
+            console.log(tr)
+            let company = tr.getAttribute('data-bs-whatever')
+            let cur_price = tr.getElementsByClassName('cur_price')[0].innerText
+            let number = tr.getElementsByClassName('number')[0].innerText
+
+            Modal.querySelector('.modal-title').innerText = `Покупка/продажа акции ${company}`
+            Modal.querySelector('#stock_company').innerText = `Акции ${company}: ${cur_price}`
+
+            let price = document.getElementById('price')
+            let stock = document.getElementById('stock')
+            price.addEventListener('change', () => { stock.value = price.value / cur_price });
+            stock.addEventListener('change', () => { price.value = stock.value * cur_price });
+        })
+
+        Modal.addEventListener('hide.bs.modal', (event) => {
+            let price = document.getElementById('price')
+            let stock = document.getElementById('stock')
+            stock.value = ''
+            price.value = ''
+        })
+    </script>
+
 {{/if}}
