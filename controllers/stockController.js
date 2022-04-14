@@ -5,6 +5,7 @@ const request = require("request");
 const {StringStream} = require("scramjet");
 
 class StockController {
+    dev = true;
     INTERVAL = 10000; //ms
     FOLLOWED_STOCKS = [
         'YNDX',
@@ -21,6 +22,15 @@ class StockController {
         'NVDA',
     ];
     constructor() {
+        if (this.dev) {
+            // todo load form disk
+            // if error continue with nodev else return
+            try {
+                
+            } catch (error) {
+                console.log(error);
+            }
+        }
         this.timestamp = new Date().getTime() - 10000;
         this.rate = this.getRate();
     }
