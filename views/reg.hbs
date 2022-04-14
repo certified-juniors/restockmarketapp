@@ -1,10 +1,46 @@
-<h2>Регистрация</h2>
-<form action="/registration" method="POST">
-  <label>Логин:</label>
-  <input type="text" name="username" id="username">
-  <label>Email:</label>
-  <input type="text" name="email" id="email">
-  <label>Пароль:</label>
-  <input type="password" name="password" id="password">
-  <input type="submit" value="Зарегистрироваться">
+<h2 class = "vstack gap-2 col-md-5 mx-auto" style = "margin-top: 20px">Регистрация</h2>
+
+<form action = "/registration" method = "POST">
+<div class=" vstack gap-2 col-md-5 mx-auto">
+    <div class="col-auto">
+        <label for="Login" class="col-form-label">Логин</label>
+    </div>
+    <div class="col-auto">
+        <input type="text" name="username" id="username" class="form-control" for = "Login" required>
+    </div>
+
+    <div class="col-auto">
+        <label for="Email" class="col-form-label">Email</label>
+    </div>
+
+    <div class="col-auto">
+        <input type="text" name = "email" id="email" class="form-control" for = "Email" required>
+    </div>
+
+    <div class="col-auto">
+        <label for="Password" class="col-form-label">Пароль</label>
+    </div>
+
+    <div class="col-auto">
+        <input type="password" name = "password" id="password" class="form-control" for = "Password" required>
+    </div>
+
+    <div class="col-auto">
+        <span id="passwordHelpInline" class="form-text">
+          Должно не менее 6 символов.
+        </span>
+    </div>
+        <button class = "btn btn-primary" type = "submit">Зарегестрироваться</button>
+    </div>
+</div>
 </form>
+
+<!--<form action="/registration" method="POST">-->
+<!--  <label>Логин:</label>-->
+<!--  <input type="text" name="username" id="username">-->
+<!--  <label>Email:</label>-->
+<!--  <input type="text" name="email" id="email">-->
+<!--  <label>Пароль:</label>-->
+<!--  <input type="password" name="password" id="password">-->
+<!--  <input type="submit" value="Зарегистрироваться">-->
+<!--</form>-->

@@ -1,25 +1,35 @@
-<div class="nav-wrapper">
-  <a class="navbar-brand" href="/">
-    <img
-      src="geld.svg"
-      alt=""
-      width="30"
-      height="24"
-      class="d-inline-block align-text-top"
-    />
-    Биржа
-  </a>
-  <div class="navbar-nav me-auto" style="margin-inline-start: auto;">
-    <a class="nav-link" href="#">Акции</a>
-    <a class="nav-link" href="#">Новости</a>
-    <div class="rightCorner">
-        {{#if user}}
-        <a class="nav-link" href="/lk">Мой портфель</a>
-        <a class="nav-link" href="/logout">Выйти</a>
-        {{else}}
-        <a class="nav-link" href="/login">Войти</a>
-        <a class="nav-link" href="/reg">Регистрация</a>
-        {{/if}}
+<nav class = "navbar navbar-expand-lg navbar-dark navbar justify-content-center bg-dark">
+    <div class = "container-fluid">
+      <a class="navbar-brand" href="/">
+        <img
+          src="geld.svg"
+          alt=""
+          width="30"
+          height="24"
+          class="d-inline-block align-text-top"
+        />
+        Биржа
+      </a>
+
+      <div class="navbar-nav me-auto" style="margin: 0 auto;">
+        <a class="nav-link" href="#">Акции</a>
+        <a class="nav-link" href="#">Новости</a>
+        <div class="rightCorner">
+            {{#if user}}
+                <form class = "d-flex">
+            <a class="nav-link active" aria-current="page" href="/lk">Мой портфель</a>
+            <a class="nav-link" href="/logout">Выйти</a>
+
+                </form>
+            {{else}}
+                <form class = "d-flex" style = "margin-inline-end: auto">
+                    <a class = "btn btn-dark btn-outline-success" role = "button" href = "/login" style = "margin-right: 10px">Войти</a>
+                    <a class = "btn btn-dark btn-outline-success" role = "button" href = "/reg" style="float:right">Регситрация</a>
+<!--                    <a class="nav-link" href="/login">Войти</a>-->
+<!--                    <a class="nav-link" href="/reg">Регистрация</a>-->
+                </form>
+            {{/if}}
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+</nav>

@@ -1,13 +1,44 @@
-<h2>Мой портфель</h2>
+<h2 style = "margin-top: 20px">Мой портфель</h2>
 <!-- ДА ПОРТФЕЛЬ, ОБ ЛК ПОТОМ ПОДУМАЕМ -->
 {{#if user}}
-    <p>Вы вошли как {{user.username}}</p>
+    <p class="text-muted">Вы вошли как {{user.username}}</p>
     <p>Ваш баланс: {{user.balance}}</p>
     <form action="/topup" method="post">
+
         <label for="amount">Сумма пополнения:</label>
         <input type="number" step="0.01" name="amount" id="amount" required>
-        <input type="submit" name="submit" value="Пополнить">
-    </form>
+        <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#Pay" type ="submit" name = "submit">Пополнить</button>
+
+    <div class="modal fade" id="Pay" tabindex="0" aria-labelledby="Pay" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Пополнение баланса</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">₽</span>
+                        <span class="input-group-text" name="amount" id="amount">1.00 руб.</span>
+                        <input type="text" class="form-control" aria-label="Rubble">
+                    </div>
+
+<!--                    <div class="input-group">-->
+<!--                        <span class="input-group-text">§</span>-->
+<!--                        <span class="input-group-text">1.00 ток.</span>-->
+<!--                        <input type="text" class="form-control" aria-label="Coin">-->
+<!--                    </div>-->
+
+                    <div style="margin-top: 15px">
+                        <button type="pay" class="btn btn-success">Зачислить</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     {{#if user.userstocks}}
         <table class="table table-striped">
             <thead>

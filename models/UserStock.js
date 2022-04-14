@@ -8,4 +8,3 @@ const UserStock = new Schema({
     price_at_buy: {type: Number, required: true},
 })
 
-module.exports = model('UserStock', UserStock);
