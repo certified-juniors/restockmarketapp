@@ -13,16 +13,64 @@
         </div>
         <div class = "col-4">
                 {{#each stocks}}
-                <div class = "card">
-                    <div class = "card-header">
-                        <h5>{{this.symbol}}</h5>
+                <div class = "card" style="margin-bottom: 10px">
+                    <div class = "card-header" style="background: linear-gradient(90deg, #190333 ,#00123a)">
+                        <h5 style="color: white; margin-top:10px">{{this.symbol}}</h5>
                     </div>
                     <div class = "card-body">
-                        <p class = "card-text">{{this.name}}</p>
-                        <h5 class = "card-title">{{this.last_price}}</h5>
+                        <div class = "container">
+                            <div class = "row">
+                                <div class = "col" style = "margin-top: 5px">
+                                    <p class = "card-text">{{this.name}}</p>
+                                </div>
+                                <div class = "col">
+                                </div>
+                                <div class = "col" style = "margin-top: 5px">
+                                    <h5 class = "card-title">{{this.last_price}}§</h5>
+                                </div>
+                                <div class = "col">
+                                    <button type="button" class="btn" style = "background-color:#689650; color:white" role = "button" data-bs-toggle="modal" data-bs-target="#ModalBuy">
+                                        Купить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {{/each}}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true" style="color: black">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true" style="color: black">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalBuy" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalBuy">Покупка</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
         </div>
     </div>
 </div>

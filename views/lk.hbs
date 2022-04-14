@@ -1,4 +1,4 @@
-<h2 style = "margin-top: 20px">Мой портфель</h2>
+<h2 style = "margin-top: 20px; color: Black">Мой портфель</h2>
 <!-- ДА ПОРТФЕЛЬ, ОБ ЛК ПОТОМ ПОДУМАЕМ -->
 {{#if user}}
     <div class = "container">
@@ -48,17 +48,17 @@
 <!--                        Конец примера-->
                     </table>
                     <p>У вас нет акций, но вы можете купить их на
-                        <a style="text-decoration: none;" href="/"><mark>бирже</mark></a></p>
+                        <a style="text-decoration: none; color: dodgerblue" href="/">бирже</a></p>
                 {{/if}}
             </div>
-            <div class = "col-md-5">
+            <div class = "col-md-5" style = "margin-top: 10px">
                 <p class="text-muted">Вы вошли как {{user.username}}</p>
                 <p class="h3">Ваш баланс: {{user.balance}}</p>
                 <form action="/topup" method="post">
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3" style = "margin-top:10px">
                         <span class="input-group-text">₽</span>
                         <input placeholder = "Сумма пополнения" type="number" class="form-control" name = "amount" id = "amount" step = "0.01" required>
-                        <button class = "btn btn-success" type = "submit">Пополнить</button>
+                        <button class = "btn" style = "background-color:#5b8c43; color:white" role = "button" type = "submit">Пополнить</button>
                     </div>
 
                 </form>
