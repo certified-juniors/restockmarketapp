@@ -1,6 +1,5 @@
 const UserStock = require('../models/UserStock');
 const User = require('../models/User');
-const Stock = require('../models/Stock');
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
