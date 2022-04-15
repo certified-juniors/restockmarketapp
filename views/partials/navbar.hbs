@@ -1,6 +1,6 @@
-<nav class = "navbar navbar-expand-lg navbar-dark navbar justify-content-center bg-dark">
+<nav class = "navbar navbar-expand-lg navbar-dark navbar justify-content-center" style="margin-top:10px; background: linear-gradient(90deg, #190333 ,#00123a)">
     <div class = "container-fluid">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="/" style="color: #ffffff; outline-color: black">
             <img
                     src="geld.svg"
                     alt=""
@@ -10,16 +10,21 @@
             />
             Биржа
         </a>
+
+        <a class="nav-link" style = "color: white" href="#">Акции</a>
+        <a class="nav-link" style = "color: white" href="#">Новости</a>
+
         {{#if user}}
             <form class = "d-flex">
+
                 <a class="nav-link active" style = "color: white" aria-current="page" href="/lk">Мой портфель</a>
-                <a class="nav-link" style = "color: white" href="/logout">Выйти</a>
+                <a class="nav-link" style = "color: #b14646" href="/logout">Выйти</a>
 
             </form>
         {{else}}
 
-            <right> <a class = "btn btn-dark btn-outline-success" role = "button" href = "/login" >Войти</a>
-                <a class = "btn btn-dark btn-outline-success" role = "button" href = "/reg" >Регистрация</a> </right>
+            <right> <a class = "btn btn-outline-light" style = "color:white" role = "button" href = "/login" >Войти</a>
+                <a class = "btn" style = "background-color:#5b8c43; color:white" role = "button" href = "/reg" >Регистрация</a> </right>
             <!--                    <a class="nav-link" href="/login">Войти</a>-->
             <!--                    <a class="nav-link" href="/reg">Регистрация</a>-->
 
@@ -27,35 +32,13 @@
     </div>
 </nav>
 
-<div class="collapse" id="navbarToggleExternalContent">
-    <div class="bg-dark p-4">
-        <h5 class="text-white h4">Меню</h5>
-        <span class="text-muted">
-
-
-
-      <div class="navbar-nav me-auto"   style="margin: 0 auto;">
-
-        <a class="nav-link" style = "color: white" href="#">Акции</a>
-        <a class="nav-link" style = "color: white" href="#">Новости</a>
-        <div class="rightCorner">
-
-        </div>
-      </div>
-        </span>
-    </div>
-
-</nav>
-    </div>
-</div>
-
 <nav  class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-        <button  class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span  class="navbar-toggler-icon"></span>
-        </button>
+    <div class="container-fluid" style = "margin-top: 1px">
     </div>
 </nav>
+
+<!--A7C0CD      FE7860      506CF0-->
+<!--BC4123      0B172A      463940-->
 
 
 
