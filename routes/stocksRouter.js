@@ -15,7 +15,6 @@ router.get('/', async (req, res) => {
         user,
         title: 'Stocks',
         page,
-        mainstock: stockController.getData().stocks[0],
         stocks: stockController.getData().stocks,
         get_data: true,
     }

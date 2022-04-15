@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 const stockRoutes = require('./routes/stocksRouter');
 const bodyparser = require('body-parser');
-const stockController = require('./controllers/stockController');
 const { db } = require('./config');
 
 const app = express();
