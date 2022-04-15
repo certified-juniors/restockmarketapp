@@ -29,7 +29,7 @@
                                     <h5 class = "card-title">{{this.last_price}}§</h5>
                                 </div>
                                 <div class = "col">
-                                    <button type="button" class="btn" style = "background-color:#689650; color:white" role = "button" data-bs-toggle="modal" data-bs-target="#ModalBuy">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         Купить
                                     </button>
                                 </div>
@@ -38,8 +38,8 @@
                     </div>
                 </div>
                 {{/each}}
-            <nav aria-label="Page navigation">
-                <ul class="pagination" style="margin-bottom: 10px; width:100%">
+            <nav aria-label="Page navigation" style = "margin-right: 10px">
+                <ul class="pagination">
                     <li class = "page-item">
                         <a class = "page-link" href="#" aria-label="First">
                             <span aria-hidden="true" style = "color: black">&laquo;</span>
@@ -75,21 +75,20 @@
             </nav>
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="ModalBuy" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalBuy">Покупка</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
         </div>
     </div>
