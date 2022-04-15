@@ -1,5 +1,4 @@
 <h2 style = "margin-top: 20px">Биржа</h2>
-<p>{{all}}</p>
 <div class = "container">
     <div class = "row">
         <div class = "col-7">
@@ -11,7 +10,7 @@
                 </div>
             </div>
         </div>
-        <div class = "col-5">
+        <div id="cards" class = "col-5">
                 {{!-- {{#each stocks}}
                 
                 {{/each}} --}}
@@ -80,7 +79,9 @@
 </div>
 
 <script>
-    let card_html = `
+    cards = document.getElementById("cards").innerHTML
+    function card_html(name, last_price) {
+    return `
     <div class = "card" style="margin-bottom: 10px">
         <div class = "card-header" style="background: linear-gradient(90deg, #190333 ,#00123a)">
             <h5 style="color: white; margin-top:10px">{{this.symbol}}</h5>
@@ -89,12 +90,12 @@
             <div class = "container">
                 <div class = "row">
                     <div class = "col" style = "margin-top: 5px">
-                        <p class = "card-text">{{this.name}}</p>
+                        <p class = "card-text">${name}</p>
                     </div>
                     <div class = "col">
                     </div>
                     <div class = "col" style = "margin-top: 5px">
-                        <h5 class = "card-title">{{this.last_price}}§</h5>
+                        <h5 class = "card-title">${last_price}§</h5>
                     </div>
                     <div class = "col">
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#buyFast" style = "background-color: #5B8C43FF">
@@ -105,18 +106,22 @@
             </div>
         </div>
     </div>
-    `
+    `}
     update().then(data=> {
         const {timestamp, ...realData} = data;
-        Object.keys(realData).slice(0, 10);
+        let keys = Object.keys(realData).slice(0, 10);
+
+        for(let i = keys.length - 1; i > -1; i--) {
+            document.getElementById("cards").innerHTML = card_html(keys[i], realData[keys[i]].cur_price) + document.getElementById("cards").innerHTML;
+        }
     });
-    document.getElementById("cards").innerHTML += card_html;
     
+
 </script>
 
     <script>
         let Modal = document.getElementById('Modal')
-        Modal.addEventListener('show.bs.modal', (event) => {
+        if (Modal) {Modal.addEventListener('show.bs.modal', (event) => {
             let tr = event.relatedTarget
             console.log(tr)
             let company = tr.getAttribute('data-bs-whatever')
@@ -137,6 +142,6 @@
             let stock = document.getElementById('stock')
             stock.value = ''
             price.value = ''
-        })
+        })}
     </script>
 </div>

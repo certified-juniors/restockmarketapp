@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const { secret } = require('../config');
 const User = require('../models/User');
 
+
 router.get('/', async (req, res) => {
     const user = await getUser(req);
     const page = req.query.page || 0
