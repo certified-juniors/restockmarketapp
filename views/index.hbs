@@ -134,7 +134,7 @@
     deleteCards = () => {
         let cards = document.getElementById("cards");
         let lastel;
-        while (!cards.lastChild.isEqualNode(document.getElementById("cards").firstChild)) {
+        while (!cards.lastChild.isEqualNode(cards.firstChild)) {
             lastel = cards.lastChild;
             cards.removeChild(cards.lastChild);
         }
