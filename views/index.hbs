@@ -11,33 +11,10 @@
                 </div>
             </div>
         </div>
-        <div class = "col-5">
-                {{#each stocks}}
-                <div class = "card" style="margin-bottom: 10px">
-                    <div class = "card-header" style="background: linear-gradient(90deg, #190333 ,#00123a)">
-                        <h5 style="color: white; margin-top:10px">{{this.symbol}}</h5>
-                    </div>
-                    <div class = "card-body">
-                        <div class = "container">
-                            <div class = "row">
-                                <div class = "col" style = "margin-top: 5px">
-                                    <p class = "card-text">{{this.name}}</p>
-                                </div>
-                                <div class = "col">
-                                </div>
-                                <div class = "col" style = "margin-top: 5px">
-                                    <h5 class = "card-title">{{this.last_price}}§</h5>
-                                </div>
-                                <div class = "col">
-                                    <button type="button" class="btn" style = "background-color:#689650; color:white" role = "button" data-bs-toggle="modal" data-bs-target="#ModalBuy">
-                                        Купить
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{/each}}
+        <div id="cards" class = "col-5">
+                {{!-- {{#each stocks}} --}}
+                
+                {{!-- {{/each}} --}}
             <nav aria-label="Page navigation">
                 <ul class="pagination" style="margin-bottom: 10px; width:100%">
                     <li class = "page-item">
@@ -94,3 +71,38 @@
         </div>
     </div>
 </div>
+
+<script>
+    let card_html = `
+    <div class = "card" style="margin-bottom: 10px">
+        <div class = "card-header" style="background: linear-gradient(90deg, #190333 ,#00123a)">
+            <h5 style="color: white; margin-top:10px">{{this.symbol}}</h5>
+        </div>
+        <div class = "card-body">
+            <div class = "container">
+                <div class = "row">
+                    <div class = "col" style = "margin-top: 5px">
+                        <p class = "card-text">{{this.name}}</p>
+                    </div>
+                    <div class = "col">
+                    </div>
+                    <div class = "col" style = "margin-top: 5px">
+                        <h5 class = "card-title">{{this.last_price}}§</h5>
+                    </div>
+                    <div class = "col">
+                        <button type="button" class="btn" style = "background-color:#689650; color:white" role = "button" data-bs-toggle="modal" data-bs-target="#ModalBuy">
+                            Купить
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    `
+    update().then(data=> {
+        const {timestamp, ...realData} = data;
+        Object.keys(realData).slice(0, 10);
+    });
+    document.getElementById("cards").innerHTML += card_html;
+    
+</script>

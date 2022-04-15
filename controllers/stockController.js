@@ -23,9 +23,9 @@ class StockController {
         } catch (error) {
             console.error(error);
         }
-        // this.interval = setInterval(() => {
-        //     this.cycleGetter();
-        // }, this.INTERVAL);
+        this.interval = setInterval(() => {
+            this.cycleGetter();
+        }, this.INTERVAL);
     }
     formatStock(stock) {
         return {
@@ -72,6 +72,8 @@ class StockController {
             }
         });
     }
+    
+
 
     async getStockFromFinnhub(symbol) {
         return new Promise((resolve, reject) => {
@@ -137,96 +139,8 @@ class StockController {
     }
 
     // На страницах обновляется Дата и время последнего обновления данных, Последняя цена акции, Необходимые данные для графиков.
-    getData(page) {
-        return {
-            date: "2020-04-17 20:30:00",
-            stocks: [
-                {
-                    symbol: "YNDX",
-                    name: "Yandex",
-                    last_price: 321.5,
-                    graph: [
-                        {
-                            timestamp: new Date().getTime() - 3*this.INTERVAL,
-                            open: 170.35,
-                            high: 170.40,
-                            low: 170.35,
-                            close: 170.40,
-                        },
-                        {
-                            timestamp: new Date().getTime() - 2*this.INTERVAL,
-                            open: 170.35,
-                            high: 170.40,
-                            low: 170.35,
-                            close: 170.40,
-                        },
-                        {
-                            timestamp: new Date().getTime() - 1*this.INTERVAL,
-                            open: 170.35,
-                            high: 170.40,
-                            low: 170.35,
-                            close: 170.40,
-                        },
-                    ]
-                },
-                {
-                    symbol: "AAPL",
-                    name: "Apple",
-                    last_price: 321.5,
-                    graph: [
-                        {
-                            timestamp: new Date().getTime() - 3*this.INTERVAL,
-                            open: 170.35,
-                            high: 170.40,
-                            low: 170.35,
-                            close: 170.40,
-                        },
-                        {
-                            timestamp: new Date().getTime() - 2*this.INTERVAL,
-                            open: 170.35,
-                            high: 170.40,
-                            low: 170.35,
-                            close: 170.40,
-                        },
-                        {
-                            timestamp: new Date().getTime() - 1*this.INTERVAL,
-                            open: 170.35,
-                            high: 170.40,
-                            low: 170.35,
-                            close: 170.40,
-                        },
-                    ]
-                },
-                {
-                    symbol: "NVDA",
-                    name: "Nvidia",
-                    last_price: 321.5,
-                    graph: [
-                        {
-                            timestamp: new Date().getTime() - 3*this.INTERVAL,
-                            open: 170.35,
-                            high: 170.40,
-                            low: 170.35,
-                            close: 170.40,
-                        },
-                        {
-                            timestamp: new Date().getTime() - 2*this.INTERVAL,
-                            open: 170.35,
-                            high: 170.40,
-                            low: 170.35,
-                            close: 170.40,
-                        },
-                        {
-                            timestamp: new Date().getTime() - 1*this.INTERVAL,
-                            open: 170.35,
-                            high: 170.40,
-                            low: 170.35,
-                            close: 170.40,
-                        },
-                    ]
-                },
-            ]
-        }
+    getData() {
+        return this.data;
     }
 
     async getRate() {

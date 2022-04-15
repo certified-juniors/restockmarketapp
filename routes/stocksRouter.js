@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
         user,
         title: 'Stocks',
         page,
-        stocks: stockController.getData().stocks,
+        stocks: stockController.getData(),
         get_data: true,
     }
     data.all = JSON.stringify(data);
