@@ -10,7 +10,7 @@
             <div class = "main_stock">
                 <p id = "name_od_main_stock"> {{mainstock.symbol}}</p>
                 <p id = "price_of_main_stock">{{mainstock.last_price}}</p>
-                <div id = "graph_of_main_stock" style="width=100%; height=100" >
+                <div style="width: 700px; height: 650px;" id = "graph_of_main_stock" >
                 </div>
             </div>
         </div>
@@ -118,7 +118,7 @@
             el.remove();
         })
         const graph = document.createElement('iframe');
-        graph.setAttribute('style',"width=100%; height=100")
+        graph.setAttribute('style',"width:100%; height:100%")
         graph.setAttribute('src', `https://widget.finnhub.io/widgets/stocks/chart?symbol=${symbol}&watermarkColor=%231db954&backgroundColor=%23222222&textColor=white`);
         graphdiv.appendChild(graph);
     }
