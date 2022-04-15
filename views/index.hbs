@@ -82,7 +82,7 @@
     cards = document.getElementById("cards").innerHTML
     function card_html(name, last_price) {
     return `
-    <div class = "card" style="margin-bottom: 10px">
+    <div class = "card" id="${name}" style="margin-bottom: 10px">
         <div class = "card-header" style="background: linear-gradient(90deg, #190333 ,#00123a)">
             <h5 style="color: white; margin-top:10px">{{this.symbol}}</h5>
         </div>
@@ -113,6 +113,13 @@
 
         for(let i = keys.length - 1; i > -1; i--) {
             document.getElementById("cards").innerHTML = card_html(keys[i], realData[keys[i]].cur_price) + document.getElementById("cards").innerHTML;
+        }
+
+        let arr = document.getElementsByClassName('card')
+        for (let i = 0; i < arr.length; i++) {
+            const el = arr[i];
+            console.log(el);
+            el.addEventListener('onclick', () => {alert(1)} )
         }
     });
     
