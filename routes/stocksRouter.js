@@ -11,14 +11,16 @@ router.get('/', async (req, res) => {
     const user = await getUser(req);
     const page = req.query.page || 0
     stocks = stockController.indexPage(page);
-    res.render('index', {
+    const data = {
         user,
         title: 'Stocks',
         page,
         mainstock: stockController.getData().stocks[0],
         stocks: stockController.getData().stocks,
         get_data: true,
-    });
+    }
+    data.all = JSON.stringify(data);
+    res.render('index', data);
 });
 
 router.get('/login', async (req, res) => {
