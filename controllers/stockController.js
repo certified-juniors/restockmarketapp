@@ -19,7 +19,13 @@ class StockController {
         // this.getStocksFromFinnhub(this.activeStocks.slice(0, this.CARDS_ON_PAGE)).then((neededStocks) => {
         //     console.log(neededStocks);
         // });
-        this.data = fs.readFileSync('./data.json');
+        try {
+            this.data = JSON.parse(fs.readFileSync('data.json'));
+        console.log(data);
+        } catch (error) {
+            this.data = {};
+        }
+        
     }
 
     async cycleGetter() {
