@@ -37,12 +37,13 @@ async function getCorrectUserStocks(userstocks) {
     const lastdata = stockController.getData();
     for(let i = 0; i < userstocks.length; i++) {
         const corus = await UserStock.findOne({_id: userstocks[i]}).lean();
-        corus.cur_price = lastdata[corus.symbol].cur_price;
-        newus.push(corus);
+        if (corus) {
+            corus.cur_price = lastdata[corus.symbol].cur_price;
+            newus.push(corus);
+        }
     }
     return newus;
 }
-
 
 router.get('/lk', async (req, res) => {
     const user = await getUser(req);
@@ -120,13 +121,23 @@ router.post('/buystock', async (req, res) => {
 
 router.post('/sellstock', async (req, res) => {
     console.log(req.body);
+    const { price, amount, symbol } = req.body;
     const data = stockController.getData();
     const user = await getUser(req);
     const realUser = await User.findById(user._id);
-    const realStock = await UserStock.findOne({user: user._id, symbol});
-    console.log(user);
-    const { price, stock, symbol } = req.body;
-    if (+stock < 1 || !data[symbol] || !data[symbol].cur_price || realStock.amount < +stock) {
+    const usersuserstocks = realUser.userstocks;
+    let realStock;
+    for (let i = 0; i < usersuserstocks.length; i++) {
+        const realUserUserStock = await UserStock.findById(usersuserstocks[i]);
+        if (realUserUserStock && realUserUserStock.symbol == symbol) {
+            realStock = realUserUserStock;
+            break;
+        }
+    }
+    
+    console.log(realStock);
+    
+    if (!realStock ||+amount < 1 || !data[symbol] || !data[symbol].cur_price || realStock.amount < +amount) {
         return res.render('index', {
             error: 'Ошибка',
             title: 'Биржа',
@@ -134,10 +145,15 @@ router.post('/sellstock', async (req, res) => {
             stocks: stockController.getData(),
         });
     }
-    realUser.balance += +stock*data[symbol].cur_price;
-    realStock.remove()
-
-    await realStock.save()
+    console.log(realUser.balance, amount, data[symbol].cur_price);
+    realUser.balance += (+amount)*data[symbol].cur_price;
+    realStock.amount -= +amount;
+    if (realStock.amount == 0) {
+        realStock.remove()
+    }else {
+        await realStock.save()
+    }
+    
     await realUser.save()
     res.redirect('/lk');
 });

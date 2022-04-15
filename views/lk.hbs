@@ -1,5 +1,10 @@
 <h2 style = "margin-top: 20px; color: Black">Мой портфель</h2>
 <!-- ДА ПОРТФЕЛЬ, ОБ ЛК ПОТОМ ПОДУМАЕМ -->
+<script>
+    function goSymbol(symbol) {
+        document.getElementById('symbol').setAttribute('value', symbol);
+    }
+</script>
 {{#if user}}
     <div class = "container">
         <div class = "row">
@@ -11,18 +16,17 @@
                             <th scope="col">Название</th>
                             <th scope="col">Количество</th>
                             <th scope="col">Цена</th>
-                            <th scope="col">Действие</th>
+                            <th scope="col">Сумма</th>
 <!--                            <th scope="col">Действие</th>-->
                         </tr>
                         </thead>
                         <tbody>
                         {{#each user.userstocks}}
-                            <tr data-bs-toggle="modal" data-bs-target="#Modal" data-bs-whatever="{{this.symbol}}">
+                            <tr data-bs-toggle="modal" data-bs-target="#Modal" data-bs-whatever="{{this.symbol}}" onclick="goSymbol('{{this.symbol}}')">
                                 <td class = "company">{{this.symbol}}</td>
                                 <td class = "number">{{this.amount}}</td>
                                 <td class = "cur_price">{{this.cur_price}}</td>
-                                <td class = "amount>{{multiply this.amount this.cur_price}}</td>
-                                <td><a href="/sell/{{this.id}}">Продать</a></td>
+                                <td class = "amount">{{multiply this.amount this.cur_price}}</td>
                             </tr>
                         {{/each}}
                         </tbody>
@@ -77,14 +81,13 @@
                 <div class="modal-body">
                     <p>Баланс: {{user.balance}}</p>
                     <p id="stock_company"></p>
-                    <input readonly="true" placeholder = "Цена" type="number" class="form-control mb-2" name = "price" id = "price" step = "0.01" required>
-                    <input placeholder = "Количество" type="number" class="form-control" name = "stock" id = "stock" step = "0.01" required>
-                </div>
-                <div class="modal-footer">
-                    <form action="" method="post">
-                        <button type="submit"  class="btn" style = "background-color:#b67f3d; color: white" data-bs-dismiss="modal">Продать акции</button>
+                    <form action="/sellstock" method="POST">
+                        <input readonly="true" placeholder = "Цена" type="number" class="form-control mb-2" name = "price" id = "price" step = "0.01" required>
+                        <input placeholder="Количество" type="number" class="form-control" name = "amount" id = "amount" required>
+                        <input hidden="true" type="text" class="form-control" name = "symbol" id = "symbol">
+                        <button type="submit" class="btn" style = "background-color:#b67f3d; color: white">Продать акции</button>
                     </form>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
@@ -98,7 +101,7 @@
             let cur_price = tr.getElementsByClassName('cur_price')[0].innerText
             let number = tr.getElementsByClassName('number')[0].innerText
 
-            Modal.querySelector('.modal-title').innerText = `Покупка/продажа акции ${company}`
+            Modal.querySelector('.modal-title').innerText = `Продажа акции ${company}`
             Modal.querySelector('#stock_company').innerText = `Акции ${company}: ${cur_price}`
 
             let price = document.getElementById('price')
