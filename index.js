@@ -10,7 +10,7 @@ const hbs = exphbs.create({
     defaultLayout: 'main',
     extname: 'hbs',
     helpers: {
-        "*": function(a, b) {
+        "multiply": function(a, b) {
             return a * b;
         },
         "/": function(a, b) {

@@ -18,10 +18,10 @@
                         <tbody>
                         {{#each user.userstocks}}
                             <tr>
-                                <td>{{this.name}}</td>
+                                <td>{{this.symbol}}</td>
                                 <td>{{this.amount}}</td>
                                 <td>{{this.cur_price}}</td>
-                                <td>{{* this.amount this.cur_price}}</td>
+                                <td>{{multiply this.amount this.cur_price}}</td>
 <!--                                <td><a href="/sell/{{this.id}}">Продать</a></td>-->
                             </tr>
                         {{/each}}

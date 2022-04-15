@@ -10,7 +10,7 @@ function sleep(ms) {
 
 class StockController {
     dev = true;
-    INTERVAL = 1500;
+    INTERVAL = 3000;
     CARDS_ON_PAGE = 10;
     constructor() {
         this.counter = 1;
@@ -19,7 +19,6 @@ class StockController {
         this.data = {};
         try {
             this.data = JSON.parse(fs.readFileSync('data.json').toString());
-            console.log(this.data);
         } catch (error) {
             console.error(error);
         }
@@ -41,7 +40,6 @@ class StockController {
 
     async cycleGetter() {
         const curSymbol = this.activeStocks[0];
-        console.log("ЗАГРУЖАЕТСЯ АКЦИЯ", curSymbol);
         const stock = await this.getStockFromFinnhub(curSymbol);
         const formattedStock = this.formatStock(stock);
         this.data[stock.symbol] = formattedStock;

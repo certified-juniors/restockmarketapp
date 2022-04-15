@@ -1,4 +1,9 @@
 <h2 style = "margin-top: 30px">Биржа</h2>
+<script>
+    function goSymbol(symbol) {
+        document.getElementById('symbol').setAttribute('value', symbol);
+    }
+</script>
 <div class = "container">
     <div class = "row">
         <div class = "col-7">
@@ -60,13 +65,14 @@
                 {{#if user}}
                 <div class="modal-body">
                     <p>Баланс: {{user.balance}}</p>
-                    <p id="stock_company"></p>
+                <form action="/buystock" method="POST">
                     <input readonly="true" placeholder = "Цена" type="number" class="form-control mb-2" name = "price" id = "price" step = "0.01" required>
                     <input placeholder = "Количество" type="number" class="form-control" name = "stock" id = "stock" step = "0.01" required>
+                    <input type="hidden" name = "symbol" id = "symbol">
+                    <button type="submit" class="btn mt-2" style="background-color: #5B8C43FF; color: white">Купить</button>
+                </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn" style="background-color: #5B8C43FF; color: white">Купить</button>
-                </div>
+                
                 {{else}}
                     <div class = "modal-body">
                         <h4>Чтобы совершать покупки, <a href="/login" style="text-decoration: none; color: dodgerblue">авторизируйтесь</a> или <a href="/reg" style = "text-decoration: none; color: dodgerblue">зарегестрируйтесь</a>.</h4>
@@ -97,8 +103,7 @@
                         <h5 class = "card-title">${cur_price}§</h5>
                     </div>
                     <div class = "col">
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#buyFast" style = "background-color: #5B8C43FF">
-                            Купить
+                        <button onclick="goSymbol('${name}')" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#buyFast" style = "background-color: #5B8C43FF">Купить
                         </button>
                     </div>
                 </div>
@@ -123,7 +128,7 @@
         const {timestamp, ...realData} = data;
         let keys = Object.keys(realData).slice(0, 10);
 
-        for(let i = keys.length - 1; i > -1; i--) {d
+        for(let i = keys.length - 1; i > -1; i--) {
             document.getElementById("cards").insertAdjacentHTML('beforeend', card_html(keys[i], realData[keys[i]].cur_price));
         }
         
