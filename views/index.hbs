@@ -11,12 +11,12 @@
                 </div>
             </div>
         </div>
-        <div id="cards" class = "col-5">
-                {{!-- {{#each stocks}} --}}
+        <div class = "col-5">
+                {{!-- {{#each stocks}}
                 
-                {{!-- {{/each}} --}}
-            <nav aria-label="Page navigation">
-                <ul class="pagination" style="margin-bottom: 10px; width:100%">
+                {{/each}} --}}
+            <nav aria-label="Page navigation" style = "margin-right: 10px">
+                <ul class="pagination">
                     <li class = "page-item">
                         <a class = "page-link" href="#" aria-label="First">
                             <span aria-hidden="true" style = "color: black">&laquo;</span>
@@ -52,21 +52,28 @@
             </nav>
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="ModalBuy" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalBuy">Покупка</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+    <div class="modal fade" id="buyFast" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Покупка</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                {{#if user}}
+                <div class="modal-body">
+                    <p>Баланс: {{user.balance}}</p>
+                    <p id="stock_company"></p>
+                    <input placeholder = "Цена" type="number" class="form-control mb-2" name = "price" id = "price" step = "0.01" required>
+                    <input placeholder = "Количество" type="number" class="form-control" name = "stock" id = "stock" step = "0.01" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" style="background-color: #5B8C43FF; color: white">Купить</button>
+                </div>
+                {{else}}
+                    <div class = "modal-body">
+                        <h4>Чтобы совершать покупки, <a href="/login" style="text-decoration: none; color: dodgerblue">авторизируйтесь</a> или <a href="/reg" style = "text-decoration: none; color: dodgerblue">зарегестрируйтесь</a>.</h4>
+                    </div>
+                {{/if}}
             </div>
         </div>
     </div>
@@ -90,7 +97,7 @@
                         <h5 class = "card-title">{{this.last_price}}§</h5>
                     </div>
                     <div class = "col">
-                        <button type="button" class="btn" style = "background-color:#689650; color:white" role = "button" data-bs-toggle="modal" data-bs-target="#ModalBuy">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#buyFast" style = "background-color: #5B8C43FF">
                             Купить
                         </button>
                     </div>
@@ -106,3 +113,30 @@
     document.getElementById("cards").innerHTML += card_html;
     
 </script>
+
+    <script>
+        let Modal = document.getElementById('Modal')
+        Modal.addEventListener('show.bs.modal', (event) => {
+            let tr = event.relatedTarget
+            console.log(tr)
+            let company = tr.getAttribute('data-bs-whatever')
+            let cur_price = tr.getElementsByClassName('cur_price')[0].innerText
+            let number = tr.getElementsByClassName('number')[0].innerText
+
+            Modal.querySelector('.modal-title').innerText = `Покупка/продажа акции ${company}`
+            Modal.querySelector('#stock_company').innerText = `Акции ${company}: ${cur_price}`
+
+            let price = document.getElementById('price')
+            let stock = document.getElementById('stock')
+            price.addEventListener('change', () => { stock.value = price.value / cur_price });
+            stock.addEventListener('change', () => { price.value = stock.value * cur_price });
+        })
+
+        Modal.addEventListener('hide.bs.modal', (event) => {
+            let price = document.getElementById('price')
+            let stock = document.getElementById('stock')
+            stock.value = ''
+            price.value = ''
+        })
+    </script>
+</div>
