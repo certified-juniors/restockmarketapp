@@ -10,7 +10,7 @@ function sleep(ms) {
 
 class StockController {
     dev = true;
-    INTERVAL = 3000;
+    INTERVAL = 1500;
     CARDS_ON_PAGE = 10;
     constructor() {
         this.counter = 1;
