@@ -10,31 +10,44 @@ function sleep(ms) {
 
 class StockController {
     dev = true;
-    INTERVAL = 3000;
+    INTERVAL = 1500;
     CARDS_ON_PAGE = 10;
     constructor() {
         this.counter = 1;
         this.timestampFirstRequest = new Date();
         this.activeStocks = "TSLA, NVDA, WU, TWTR, BABA, AMD, CCL, FB, DAL, NKE, IBM, OXY, VIPS, BIDU, LVS, AAPL, PYPL, AMZN, BZUN, MOMO, OSUR, BA, ESPR, BYSI, MSFT, COIN, MARA, CVX, TSM, WFC, OIS, SPCE, AA, MRNA, BILI, MOS, IOVA, XOM, NEM, EQT, JD, GOOG, C, AAL, HAL, TCS, GOOGL, INTC, MS, M, CLF, GS, GTHX, TSN, TGT, CNK, RIVN, MU, UAL, TWOU, BAC, SQ, BBBY, ARMK, QCOM, F, ABBV, EHTH, ENDP, ZIM, NVTA, SPR, SWN, CAT, TAL, MSTR, EAR, RIG, RCL, HTHT, AFL, ASTR, DXC, NFLX, PFE, SAVA, FDX, LI, ETSY, CHGG, ARVL, APLE, SFM, WISH, CGEN, V, AYX, SAVE, FTCI, ATRA".split(", ");
-        // this.getStocksFromFinnhub(this.activeStocks.slice(0, this.CARDS_ON_PAGE)).then((neededStocks) => {
-        //     console.log(neededStocks);
-        // });
+        this.data = {};
         try {
-            this.data = JSON.parse(fs.readFileSync('data.json'));
-        console.log(data);
+            this.data = JSON.parse(fs.readFileSync('data.json').toString());
+            console.log(this.data);
         } catch (error) {
-            this.data = {};
+            console.error(error);
         }
-        
+        // this.interval = setInterval(() => {
+        //     this.cycleGetter();
+        // }, this.INTERVAL);
+    }
+    formatStock(stock) {
+        return {
+            cur_price: stock.c,
+            change: stock.d,
+            percent_change: stock.dp,
+            high: stock.h,
+            low: stock.l,
+            open: stock.o,
+            prev_close: stock.pc,
+        };
     }
 
     async cycleGetter() {
         const curSymbol = this.activeStocks[0];
+        console.log("ЗАГРУЖАЕТСЯ АКЦИЯ", curSymbol);
         const stock = await this.getStockFromFinnhub(curSymbol);
-        this.data[stock.symbol] = stock;
-        this.data.timestamp = new Date().getTime();
+        const formattedStock = this.formatStock(stock);
+        this.data[stock.symbol] = formattedStock;
         this.activeStocks.push(this.activeStocks.shift());
         if (curSymbol === "TSLA") {
+            this.data.timestamp = new Date().getTime();
             fs.writeFileSync('./data.json', JSON.stringify(this.data));
         }
     }
