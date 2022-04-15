@@ -18,6 +18,10 @@
                 {{!-- {{#each stocks}}
                 
                 {{/each}} --}}
+
+            {{#if user}}
+                <p class = "h3">Ваш баланс: {{user.balance}}§</p>
+            {{/if}}
             <nav aria-label="Page navigation" style = "margin-right: 10px">
                 <ul class="pagination">
                     <li class = "page-item">

@@ -97,15 +97,48 @@ router.post('/buystock', async (req, res) => {
         });
     }
     realUser.balance -= +stock*data[symbol].cur_price;
-    const newuserstock = new UserStock({
-        user: user._id,
-        amount: +stock,
-        symbol,
-        price_at_buy: data[symbol].cur_price,
-    });
-    realUser.userstocks.push(newuserstock);
-    await realUser.save();
-    await newuserstock.save();
+
+    let realStock = await UserStock.findOne({user: user._id, symbol});
+    if (realStock) {
+        realStock.amount += +stock;
+        realStock.price_at_buy = data[symbol].cur_price
+    }
+    else {
+        realStock = new UserStock({
+            user: user._id,
+            amount: +stock,
+            symbol,
+            price_at_buy: data[symbol].cur_price,
+        });
+        realUser.userstocks.push(realStock);
+    }
+
+    await realStock.save()
+    await realUser.save()
+    res.redirect('/lk');
+});
+
+router.post('/sellstock', async (req, res) => {
+    console.log(req.body);
+    const data = stockController.getData();
+    const user = await getUser(req);
+    const realUser = await User.findById(user._id);
+    const realStock = await UserStock.findOne({user: user._id, symbol});
+    console.log(user);
+    const { price, stock, symbol } = req.body;
+    if (+stock < 1 || !data[symbol] || !data[symbol].cur_price || realStock.amount < +stock) {
+        return res.render('index', {
+            error: 'Ошибка',
+            title: 'Биржа',
+            get_data: true,
+            stocks: stockController.getData(),
+        });
+    }
+    realUser.balance += +stock*data[symbol].cur_price;
+    realStock.remove()
+
+    await realStock.save()
+    await realUser.save()
     res.redirect('/lk');
 });
 module.exports = router;

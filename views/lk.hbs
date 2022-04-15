@@ -11,18 +11,18 @@
                             <th scope="col">Название</th>
                             <th scope="col">Количество</th>
                             <th scope="col">Цена</th>
-                            <th scope="col">Сумма</th>
+                            <th scope="col">Действие</th>
 <!--                            <th scope="col">Действие</th>-->
                         </tr>
                         </thead>
                         <tbody>
                         {{#each user.userstocks}}
-                            <tr>
-                                <td>{{this.symbol}}</td>
-                                <td>{{this.amount}}</td>
-                                <td>{{this.cur_price}}</td>
-                                <td>{{multiply this.amount this.cur_price}}</td>
-<!--                                <td><a href="/sell/{{this.id}}">Продать</a></td>-->
+                            <tr data-bs-toggle="modal" data-bs-target="#Modal" data-bs-whatever="{{this.symbol}}">
+                                <td class = "company">{{this.symbol}}</td>
+                                <td class = "number">{{this.amount}}</td>
+                                <td class = "cur_price">{{this.cur_price}}</td>
+                                <td class = "amount>{{multiply this.amount this.cur_price}}</td>
+                                <td><a href="/sell/{{this.id}}">Продать</a></td>
                             </tr>
                         {{/each}}
                         </tbody>
@@ -39,12 +39,12 @@
                         </tr>
                         </thead>
  <!--                        Пример -->
-                        <tr data-bs-toggle="modal" data-bs-target="#Modal" data-bs-whatever="Google">
-                            <td class="company">Google</td>
-                            <td class="number">7</td>
-                            <td class="cur_price">1000</td>
-                            <td class="amount">7000</td>
-                        </tr>
+<!--                        <tr data-bs-toggle="modal" data-bs-target="#Modal" data-bs-whatever="Google">-->
+<!--                            <td class="company">Google</td>-->
+<!--                            <td class="number">7</td>-->
+<!--                            <td class="cur_price">1000</td>-->
+<!--                            <td class="amount">7000</td>-->
+<!--                        </tr>-->
 <!--                        Конец примера-->
                     </table>
                     <p>У вас нет акций, но вы можете купить их на
