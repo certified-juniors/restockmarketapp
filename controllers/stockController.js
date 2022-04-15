@@ -2,6 +2,7 @@ const finnhub = require('finnhub');
 const api_key = finnhub.ApiClient.instance.authentications['api_key'];
 api_key.apiKey = require('../config').apikey;
 const finnhubClient = new finnhub.DefaultApi();
+const fs = require('fs');
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -9,16 +10,27 @@ function sleep(ms) {
 
 class StockController {
     dev = true;
-    INTERVAL = 5 * 60 * 1000; //ms
+    INTERVAL = 3000;
     CARDS_ON_PAGE = 10;
     constructor() {
         this.counter = 1;
         this.timestampFirstRequest = new Date();
         this.activeStocks = "TSLA, NVDA, WU, TWTR, BABA, AMD, CCL, FB, DAL, NKE, IBM, OXY, VIPS, BIDU, LVS, AAPL, PYPL, AMZN, BZUN, MOMO, OSUR, BA, ESPR, BYSI, MSFT, COIN, MARA, CVX, TSM, WFC, OIS, SPCE, AA, MRNA, BILI, MOS, IOVA, XOM, NEM, EQT, JD, GOOG, C, AAL, HAL, TCS, GOOGL, INTC, MS, M, CLF, GS, GTHX, TSN, TGT, CNK, RIVN, MU, UAL, TWOU, BAC, SQ, BBBY, ARMK, QCOM, F, ABBV, EHTH, ENDP, ZIM, NVTA, SPR, SWN, CAT, TAL, MSTR, EAR, RIG, RCL, HTHT, AFL, ASTR, DXC, NFLX, PFE, SAVA, FDX, LI, ETSY, CHGG, ARVL, APLE, SFM, WISH, CGEN, V, AYX, SAVE, FTCI, ATRA".split(", ");
-        this.getStocksFromFinnhub(this.activeStocks.slice(0, this.CARDS_ON_PAGE)).then((neededStocks) => {
-            console.log(neededStocks);
-        });
-        this.stocks = {};
+        // this.getStocksFromFinnhub(this.activeStocks.slice(0, this.CARDS_ON_PAGE)).then((neededStocks) => {
+        //     console.log(neededStocks);
+        // });
+        this.data = fs.readFileSync('./data.json');
+    }
+
+    async cycleGetter() {
+        const curSymbol = this.activeStocks[0];
+        const stock = await this.getStockFromFinnhub(curSymbol);
+        this.data[stock.symbol] = stock;
+        this.data.timestamp = new Date().getTime();
+        this.activeStocks.push(this.activeStocks.shift());
+        if (curSymbol === "TSLA") {
+            fs.writeFileSync('./data.json', JSON.stringify(this.data));
+        }
     }
 
     async getStocksFromFinnhub(symbols) {
@@ -42,7 +54,7 @@ class StockController {
         });
     }
 
-    getStockFromFinnhub(symbol) {
+    async getStockFromFinnhub(symbol) {
         return new Promise((resolve, reject) => {
             finnhubClient.quote(symbol, (error, data, response) => {
                 if (error) {
